@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italian National Offshore - Banking Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        'banking-teal': '#1B7B7A',
+                        'banking-dark-teal': '#0F5F5E',
+                        'banking-light-teal': '#20B2AA',
+                        'banking-bg': '#F8FAFA',
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-banking-bg font-inter">
+    <!-- Header -->
+    <header class="bg-banking-teal text-white px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <img src="https://flagicons.lipis.dev/flags/4x3/gb.svg" alt="English" class="w-6 h-4">
+            <span class="font-medium">English</span>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <!-- Bank logo placeholder -->
+            <div class="bg-white text-banking-teal px-3 py-1 rounded font-bold text-sm">INO</div>
+            
+            <!-- Notification icon with badge -->
+            <div class="relative">
+                <i class="fas fa-bell text-xl"></i>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">1</span>
+            </div>
+            
+            <!-- User avatar -->
+            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-banking-teal"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            <!-- @COMPONENT: AccountCarousel -->
+            <!-- Account Cards Carousel -->
+            <div class="mb-8">
+                <div class="relative">
+                    <div class="flex space-x-4 overflow-x-auto scrollbar-hide pb-4" id="accountCarousel" style="scroll-snap-type: x mandatory;">
+                        <!-- Savings Account Card -->
+                        <div class="bg-banking-teal text-white p-6 rounded-lg min-w-[320px] flex-shrink-0" style="scroll-snap-align: start;" data-mock="true">
+                            <div class="mb-4">
+                                <h3 class="text-sm font-medium opacity-80">SAVINGS</h3>
+                                <div class="text-3xl font-bold" data-bind="account.balance">$79,310.00</div>
+                            </div>
+                            <div class="mb-4">
+                                <p class="text-xs opacity-80">ACCOUNT NUMBER</p>
+                                <p class="font-mono text-sm" data-bind="account.maskedNumber">•••• 1548</p>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <div>
+                                    <p class="opacity-80">TOTAL CREDIT</p>
+                                    <p class="opacity-80">JUN. 2025</p>
+                                    <p class="font-semibold" data-bind="account.totalCredit">$0.00</p>
+                                </div>
+                                <div>
+                                    <p class="opacity-80">TOTAL DEBIT</p>
+                                    <p class="opacity-80">JUN. 2025</p>
+                                    <p class="font-semibold" data-bind="account.totalDebit">$870,690.00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Checking Account Card -->
+                        <div class="bg-banking-teal text-white p-6 rounded-lg min-w-[320px] flex-shrink-0" style="scroll-snap-align: start;" data-mock="true">
+                            <div class="mb-4">
+                                <h3 class="text-sm font-medium opacity-80">CHECKING</h3>
+                                <div class="text-3xl font-bold" data-bind="account.balance">$700.00</div>
+                            </div>
+                            <div class="mb-4">
+                                <p class="text-xs opacity-80">ACCOUNT NUMBER</p>
+                                <p class="font-mono text-sm" data-bind="account.maskedNumber">•••• 1976</p>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <div>
+                                    <p class="opacity-80">TOTAL CREDIT</p>
+                                    <p class="opacity-80">JUN. 2025</p>
+                                    <p class="font-semibold" data-bind="account.totalCredit">$0.00</p>
+                                </div>
+                                <div>
+                                    <p class="opacity-80">TOTAL DEBIT</p>
+                                    <p class="opacity-80">JUN. 2025</p>
+                                    <p class="font-semibold" data-bind="account.totalDebit">$0.00</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Business Account Card -->
+                        <div class="bg-banking-teal text-white p-6 rounded-lg min-w-[320px] flex-shrink-0" style="scroll-snap-align: start;" data-mock="true">
+                            <div class="mb-4">
+                                <h3 class="text-sm font-medium opacity-80">BUSINESS</h3>
+                                <div class="text-3xl font-bold" data-bind="account.balance">$15,420.50</div>
+                            </div>
+                            <div class="mb-4">
+                                <p class="text-xs opacity-80">ACCOUNT NUMBER</p>
+                                <p class="font-mono text-sm" data-bind="account.maskedNumber">•••• 2847</p>
+                            </div>
+                            <div class="flex justify-between text-xs">
+                                <div>
+                                    <p class="opacity-80">TOTAL CREDIT</p>
+                                    <p class="opacity-80">JUN. 2025</p>
+                                    <p class="font-semibold" data-bind="account.totalCredit">$25,000.00</p>
+                                </div>
+                                <div>
+                                    <p class="opacity-80">TOTAL DEBIT</p>
+                                    <p class="opacity-80">JUN. 2025</p>
+                                    <p class="font-semibold" data-bind="account.totalDebit">$9,579.50</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: AccountCarousel -->
+
+            <!-- @COMPONENT: ActionButtonsGrid -->
+            <!-- Transfer Actions -->
+            <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
+                <div class="grid grid-cols-3 gap-6">
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleWireTransfer">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-external-link-alt text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Wire Transfer</span>
+                    </button>
+                    
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleLocalTransfer">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-exchange-alt text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Local Transfer</span>
+                    </button>
+                    
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleInternalTransfer">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-arrow-right text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Internal Transfer</span>
+                    </button>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: ActionButtonsGrid -->
+
+            <!-- @COMPONENT: BankingServicesGrid -->
+            <!-- Banking Services -->
+            <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
+                <div class="grid grid-cols-3 gap-6">
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleBuyCrypto">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fab fa-bitcoin text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Buy Crypto</span>
+                    </button>
+                    
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handlePayBills">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-file-invoice-dollar text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Pay Bills</span>
+                    </button>
+                    
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleAddBeneficiary">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-user-plus text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Add Beneficiary</span>
+                    </button>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: BankingServicesGrid -->
+
+            <!-- @COMPONENT: AdditionalServicesGrid -->
+            <!-- Additional Services -->
+            <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
+                <div class="grid grid-cols-3 gap-6">
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleSavingsStatement">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-file-alt text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Savings Statement</span>
+                    </button>
+                    
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleCheckingStatement">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-list-alt text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Checking Statement</span>
+                    </button>
+                    
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleItalianAlerts">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-envelope text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Italian Alerts</span>
+                    </button>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: AdditionalServicesGrid -->
+
+            <!-- @COMPONENT: MoreServicesGrid -->
+            <!-- More Services -->
+            <div class="bg-white rounded-lg p-6 mb-6 shadow-sm">
+                <div class="grid grid-cols-3 gap-6">
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleItalianLoans">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-hand-holding-usd text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Italian Loans</span>
+                    </button>
+                    
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleInvestments">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-chart-line text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Italian Investments</span>
+                    </button>
+                    
+                    <button class="flex flex-col items-center p-4 hover:bg-gray-50 rounded-lg transition-colors" data-event="click:handleItalianSupport">
+                        <div class="bg-banking-teal text-white p-3 rounded-lg mb-3">
+                            <i class="fas fa-headset text-lg"></i>
+                        </div>
+                        <span class="text-sm font-medium text-center">Italian Support</span>
+                    </button>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: MoreServicesGrid -->
+
+            <!-- @COMPONENT: BeneficiariesSection -->
+            <!-- Beneficiaries Section -->
+            <div class="bg-white rounded-lg p-6 shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">Beneficiaries</h3>
+                    <button class="bg-banking-teal text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-banking-dark-teal transition-colors" data-event="click:handleAddNewBeneficiary">
+                        Add New <i class="fas fa-plus ml-1"></i>
+                    </button>
+                </div>
+                
+                <div class="text-center py-8 text-gray-500" data-mock="true">
+                    <i class="fas fa-users text-3xl mb-3 opacity-50"></i>
+                    <p>No Beneficiary. <button class="text-banking-teal hover:underline" data-event="click:handleAddNewBeneficiary">Add New</button></p>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: BeneficiariesSection -->
+        </main>
+
+        <!-- @COMPONENT: RightSidebar -->
+        <!-- Right Sidebar -->
+        <aside class="w-80 p-6 space-y-6">
+            <!-- Italian Cards Section -->
+            <div class="bg-white rounded-lg p-6 shadow-sm">
+                <h3 class="text-sm font-medium text-banking-teal mb-4">Italian Cards</h3>
+                
+                <!-- Credit Card Display -->
+                <div class="relative">
+                    <!-- Modern banking card with gradient background -->
+                    <div class="bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 text-white p-6 rounded-xl shadow-lg relative overflow-hidden">
+                        <!-- Card background pattern -->
+                        <div class="absolute inset-0 opacity-10">
+                            <div class="absolute top-4 right-4 w-12 h-8 bg-white rounded"></div>
+                        </div>
+                        
+                        <!-- Bank logo -->
+                        <div class="absolute top-4 right-4 bg-white text-blue-900 px-2 py-1 rounded text-xs font-bold">
+                            INO
+                        </div>
+                        
+                        <!-- Card number -->
+                        <div class="font-mono text-lg tracking-wider mb-4" data-bind="card.maskedNumber">
+                            4716 XXXX XXXX 8257
+                        </div>
+                        
+                        <!-- Card details -->
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-xs opacity-80">VALID THRU</p>
+                                <p class="font-medium" data-bind="card.expiryDate">06/28</p>
+                            </div>
+                            <div>
+                                <p class="text-xs opacity-80">CARDHOLDER</p>
+                                <p class="font-medium" data-bind="card.holderName">DARIO D ENZO</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Italian Tips Section -->
+            <div class="bg-white rounded-lg p-6 shadow-sm">
+                <h3 class="text-sm font-medium text-banking-teal mb-4">Italian Tips</h3>
+                
+                <div class="space-y-4">
+                    <!-- Auto Save Tip -->
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-yellow-100 p-2 rounded-lg">
+                            <i class="fas fa-piggy-bank text-yellow-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-sm mb-1">Auto Save</h4>
+                            <p class="text-xs text-gray-600">Set a goal, save automatically with Italian National Offshore's Auto Save and track your progress.</p>
+                        </div>
+                    </div>
+
+                    <!-- Budget Tip -->
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-green-100 p-2 rounded-lg">
+                            <i class="fas fa-chart-pie text-green-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-sm mb-1">Budget</h4>
+                            <p class="text-xs text-gray-600">Check in with your budget and stay on top of your spending</p>
+                        </div>
+                    </div>
+
+                    <!-- Home Option Tip -->
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-teal-100 p-2 rounded-lg">
+                            <i class="fas fa-home text-teal-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-sm mb-1">Home Option</h4>
+                            <p class="text-xs text-gray-600">Your home purchase, refinance and insights right under one roof.</p>
+                        </div>
+                    </div>
+
+                    <!-- Security Tip -->
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-red-100 p-2 rounded-lg">
+                            <i class="fas fa-shield-alt text-red-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-sm mb-1">Security Tip</h4>
+                            <p class="text-xs text-gray-600">We will NEVER ask you to provide your security details such as COT Code or any sensitive details of your account.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- @END_COMPONENT: RightSidebar -->
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bg-white border-t border-gray-200 px-6 py-4">
+        <div class="flex justify-center space-x-12">
+            <button class="flex flex-col items-center text-banking-teal" data-event="click:handleSettings">
+                <i class="fas fa-cog text-lg mb-1"></i>
+                <span class="text-xs">Settings</span>
+            </button>
+            <button class="flex flex-col items-center text-gray-400 hover:text-banking-teal transition-colors" data-event="click:handleNotifications">
+                <i class="fas fa-bell text-lg mb-1"></i>
+                <span class="text-xs">Notifications</span>
+            </button>
+            <button class="flex flex-col items-center text-gray-400 hover:text-banking-teal transition-colors" data-event="click:handleHome">
+                <i class="fas fa-home text-lg mb-1"></i>
+                <span class="text-xs">Home</span>
+            </button>
+            <button class="flex flex-col items-center text-gray-400 hover:text-banking-teal transition-colors" data-event="click:handleSupport">
+                <i class="fas fa-headset text-lg mb-1"></i>
+                <span class="text-xs">Support</span>
+            </button>
+            <button class="flex flex-col items-center text-gray-400 hover:text-banking-teal transition-colors" data-event="click:handleLogout">
+                <i class="fas fa-sign-out-alt text-lg mb-1"></i>
+                <span class="text-xs">Logout</span>
+            </button>
+        </div>
+    </nav>
+
+    <style>
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+
+    <script>
+        (function() {
+            // Carousel smooth scrolling functionality
+            const carousel = document.getElementById('accountCarousel');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            if (carousel) {
+                carousel.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    startX = e.pageX - carousel.offsetLeft;
+                    scrollLeft = carousel.scrollLeft;
+                    carousel.style.cursor = 'grabbing';
+                });
+
+                carousel.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    carousel.style.cursor = 'grab';
+                });
+
+                carousel.addEventListener('mouseup', () => {
+                    isDown = false;
+                    carousel.style.cursor = 'grab';
+                });
+
+                carousel.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - carousel.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    carousel.scrollLeft = scrollLeft - walk;
+                });
+
+                // Touch events for mobile
+                carousel.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].pageX - carousel.offsetLeft;
+                    scrollLeft = carousel.scrollLeft;
+                });
+
+                carousel.addEventListener('touchmove', (e) => {
+                    if (!startX) return;
+                    const x = e.touches[0].pageX - carousel.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    carousel.scrollLeft = scrollLeft - walk;
+                });
+            }
+
+            // TODO: Implement business logic for:
+            // - Account data fetching and real-time updates
+            // - Transfer functionality with form validation
+            // - Beneficiary management with CRUD operations
+            // - Card management and transactions
+            // - Authentication and security features
+            // - Responsive data binding for dynamic content
+            // - API calls for banking operations
+
+            // Mock data structure for reference:
+            const mockData = {
+                accounts: [
+                    {
+                        type: 'SAVINGS',
+                        balance: 79310.00,
+                        maskedNumber: '•••• 1548',
+                        totalCredit: 0.00,
+                        totalDebit: 870690.00
+                    },
+                    {
+                        type: 'CHECKING', 
+                        balance: 700.00,
+                        maskedNumber: '•••• 1976',
+                        totalCredit: 0.00,
+                        totalDebit: 0.00
+                    }
+                ],
+                card: {
+                    maskedNumber: '4716 XXXX XXXX 8257',
+                    expiryDate: '06/28',
+                    holderName: 'DARIO D ENZO'
+                },
+                beneficiaries: []
+            };
+
+        })();
+    </script>
+
+    <!-- Database Schema Comments for Implementation -->
+    <!-- 
+    @DATABASE_SCHEMA:
+    
+    Users Table:
+    - id (PRIMARY KEY)
+    - email (UNIQUE)
+    - password_hash
+    - first_name
+    - last_name
+    - phone
+    - created_at
+    - updated_at
+    
+    Accounts Table:
+    - id (PRIMARY KEY)
+    - user_id (FOREIGN KEY -> Users.id)
+    - account_type (ENUM: 'SAVINGS', 'CHECKING', 'BUSINESS')
+    - account_number (UNIQUE)
+    - balance (DECIMAL)
+    - masked_number
+    - created_at
+    - updated_at
+    
+    Transactions Table:
+    - id (PRIMARY KEY)
+    - account_id (FOREIGN KEY -> Accounts.id)
+    - transaction_type (ENUM: 'CREDIT', 'DEBIT', 'TRANSFER')
+    - amount (DECIMAL)
+    - description
+    - reference_number
+    - created_at
+    
+    Cards Table:
+    - id (PRIMARY KEY)
+    - user_id (FOREIGN KEY -> Users.id)
+    - card_number (ENCRYPTED)
+    - masked_number
+    - card_type (ENUM: 'DEBIT', 'CREDIT')
+    - expiry_date
+    - holder_name
+    - status (ENUM: 'ACTIVE', 'BLOCKED', 'EXPIRED')
+    - created_at
+    
+    Beneficiaries Table:
+    - id (PRIMARY KEY)
+    - user_id (FOREIGN KEY -> Users.id)
+    - beneficiary_name
+    - account_number
+    - bank_name
+    - routing_number
+    - relationship
+    - created_at
+    - updated_at
+    
+    @FORMS_NEEDED:
+    1. Add Account Form (account_type, initial_balance)
+    2. Transfer Money Form (from_account, to_account, amount, description)
+    3. Add Beneficiary Form (name, account_number, bank_name, routing_number)
+    4. Card Application Form (card_type, shipping_address)
+    5. User Profile Form (personal_info, contact_details)
+    -->
+</body>
+</html>

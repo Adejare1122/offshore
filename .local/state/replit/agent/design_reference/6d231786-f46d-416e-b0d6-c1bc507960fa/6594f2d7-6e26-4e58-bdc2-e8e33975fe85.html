@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italian National Offshore Banking Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#086b8c',
+                        secondary: '#0891b2',
+                        accent: '#0e7490'
+                    },
+                    spacing: {
+                        '18': '4.5rem',
+                        '22': '5.5rem'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .swiper-horizontal > .swiper-scrollbar {
+            display: none !important;
+        }
+        .swiper-scrollbar {
+            display: none !important;
+        }
+        .account-card {
+            background: #086b8c !important;
+            border: 1px solid white !important;
+        }
+        .swiper-slide {
+            height: auto;
+        }
+    </style>
+</head>
+<body class="bg-white font-sans antialiased">
+
+    <!-- @COMPONENT: Header [language, logo, notifications, profile] -->
+    <header class="bg-primary text-white">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Language Selector -->
+                <div class="flex items-center space-x-2">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='18'%3E%3Crect width='24' height='18' fill='%23012169'/%3E%3Cpath d='M0 0l24 18M24 0L0 18' stroke='%23fff' stroke-width='2'/%3E%3Cpath d='M10 0v18M0 6h24M0 12h24' stroke='%23fff' stroke-width='1'/%3E%3Cpath d='M10 0v18M0 6h24M0 12h24' stroke='%23C8102E' stroke-width='1'/%3E%3C/svg%3E" alt="UK Flag" class="w-6 h-4">
+                    <span class="text-sm font-medium" data-bind="user.language">English</span>
+                </div>
+
+                <!-- Logo -->
+                <div class="flex-1 flex justify-center">
+                    <div class="bg-white bg-opacity-20 px-4 py-2 rounded-lg">
+                        <span class="text-xl font-bold tracking-wider">INO</span>
+                    </div>
+                </div>
+
+                <!-- Notifications & Profile -->
+                <div class="flex items-center space-x-4">
+                    <button class="relative p-2 hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors" data-event="click:showNotifications">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" data-bind="notificationCount">3</span>
+                    </button>
+                    <button class="flex items-center space-x-2 p-2 hover:bg-white hover:bg-opacity-10 rounded-lg transition-colors" data-event="click:showProfile">
+                        <div class="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-sm"></i>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- @END_COMPONENT: Header -->
+
+    <!-- @COMPONENT: AccountCarousel [accounts data, swiper config] -->
+    <section class="bg-primary pb-8">
+        <div class="container mx-auto px-4">
+            <!-- Account Cards Carousel -->
+            <div class="swiper account-swiper">
+                <div class="swiper-wrapper">
+                    <!-- @MAP: accounts.map(account => ( -->
+                    <!-- Savings Account -->
+                    <div class="swiper-slide">
+                        <div class="account-card text-white rounded-xl p-6 mx-2" data-mock="true">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-sm font-medium opacity-80" data-bind="account.type">SAVINGS</h3>
+                                    <div class="text-3xl font-bold mt-2" data-bind="account.balance">$79,310.00</div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs opacity-80">ACCOUNT NUMBER</p>
+                                    <p class="font-mono text-sm mt-1" data-bind="account.maskedNumber">•••• 1548</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                <div>
+                                    <p class="text-xs opacity-80">TOTAL CREDIT</p>
+                                    <p class="text-xs opacity-80">JUN 2025</p>
+                                    <p class="font-semibold mt-1" data-bind="account.totalCredit">$0.00</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs opacity-80">TOTAL DEBIT</p>
+                                    <p class="text-xs opacity-80">JUN 2025</p>
+                                    <p class="font-semibold mt-1" data-bind="account.totalDebit">$870,690.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Checking Account -->
+                    <div class="swiper-slide">
+                        <div class="account-card text-white rounded-xl p-6 mx-2" data-mock="true">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-sm font-medium opacity-80" data-bind="account.type">CHECKING</h3>
+                                    <div class="text-3xl font-bold mt-2" data-bind="account.balance">$700.00</div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs opacity-80">ACCOUNT NUMBER</p>
+                                    <p class="font-mono text-sm mt-1" data-bind="account.maskedNumber">•••• 1976</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                <div>
+                                    <p class="text-xs opacity-80">TOTAL CREDIT</p>
+                                    <p class="text-xs opacity-80">JUN 2025</p>
+                                    <p class="font-semibold mt-1" data-bind="account.totalCredit">$0.00</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs opacity-80">TOTAL DEBIT</p>
+                                    <p class="text-xs opacity-80">JUN 2025</p>
+                                    <p class="font-semibold mt-1" data-bind="account.totalDebit">$0.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Investment Account -->
+                    <div class="swiper-slide">
+                        <div class="account-card text-white rounded-xl p-6 mx-2" data-mock="true">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-sm font-medium opacity-80" data-bind="account.type">INVESTMENT</h3>
+                                    <div class="text-3xl font-bold mt-2" data-bind="account.balance">$125,450.00</div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs opacity-80">ACCOUNT NUMBER</p>
+                                    <p class="font-mono text-sm mt-1" data-bind="account.maskedNumber">•••• 2847</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                <div>
+                                    <p class="text-xs opacity-80">TOTAL CREDIT</p>
+                                    <p class="text-xs opacity-80">JUN 2025</p>
+                                    <p class="font-semibold mt-1" data-bind="account.totalCredit">$15,450.00</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs opacity-80">TOTAL DEBIT</p>
+                                    <p class="text-xs opacity-80">JUN 2025</p>
+                                    <p class="font-semibold mt-1" data-bind="account.totalDebit">$2,150.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_MAP )) -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: AccountCarousel -->
+
+    <!-- @COMPONENT: QuickActions [services grid, white background with overlap] -->
+    <section class="bg-white -mt-10 pt-10 rounded-t-[20px] relative z-10">
+        <div class="container mx-auto px-4">
+            
+            <!-- Main Services Grid -->
+            <div class="grid grid-cols-3 gap-6 mb-8">
+                <!-- Row 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:wireTransfer">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-share text-white text-lg transform rotate-45"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Wire</p>
+                    <p class="text-sm text-gray-600">Transfer</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:localTransfer">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-share text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Local</p>
+                    <p class="text-sm text-gray-600">Transfer</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:internalTransfer">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-exchange-alt text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Internal</p>
+                    <p class="text-sm text-gray-600">Transfer</p>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:buyCrypto">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fab fa-bitcoin text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Buy</p>
+                    <p class="text-sm text-gray-600">Crypto</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:payBills">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-credit-card text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Pay</p>
+                    <p class="text-sm text-gray-600">Bills</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:addBeneficiary">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-user-plus text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Add</p>
+                    <p class="text-sm text-gray-600">Beneficiary</p>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:savingsStatement">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-file-alt text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Savings</p>
+                    <p class="text-sm text-gray-600">Statement</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:checkingStatement">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-list-alt text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Checking</p>
+                    <p class="text-sm text-gray-600">Statement</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:italianAlerts">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-envelope text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Italian</p>
+                    <p class="text-sm text-gray-600">Alerts</p>
+                </div>
+
+                <!-- Row 4 -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:italianLoans">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-dollar-sign text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Italian</p>
+                    <p class="text-sm text-gray-600">Loans</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:italianInvestments">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-chart-line text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Italian</p>
+                    <p class="text-sm text-gray-600">Investments</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center hover:shadow-md transition-shadow cursor-pointer" data-event="click:italianSupport">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-life-ring text-white text-lg"></i>
+                    </div>
+                    <p class="font-medium text-gray-800">Italian</p>
+                    <p class="text-sm text-gray-600">Support</p>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Left Content -->
+                <div class="lg:col-span-2 space-y-8">
+                    
+                    <!-- Beneficiaries Section -->
+                    <div class="bg-white">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-semibold text-gray-800">Beneficiaries</h2>
+                            <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors flex items-center space-x-2" data-event="click:addNewBeneficiary">
+                                <span>Add New</span>
+                                <i class="fas fa-plus text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="text-center py-12 text-gray-500">
+                            <i class="fas fa-users text-4xl mb-4 opacity-50"></i>
+                            <p class="text-lg mb-2">No Beneficiary</p>
+                            <button class="text-primary hover:underline font-medium" data-event="click:addFirstBeneficiary" data-bind="beneficiaries.isEmpty">Add New</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="space-y-6">
+                    
+                    <!-- Italian Cards -->
+                    <div class="bg-white">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Italian Cards</h3>
+                        <div class="bg-gradient-to-br from-blue-900 to-blue-600 rounded-xl p-6 text-white relative overflow-hidden">
+                            <div class="absolute top-4 right-4">
+                                <div class="bg-white bg-opacity-20 px-3 py-1 rounded">
+                                    <span class="text-sm font-bold">INO</span>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <!-- Card chip representation -->
+                                <div class="w-8 h-6 bg-yellow-400 rounded-sm mb-4"></div>
+                                <div class="font-mono text-lg tracking-widest" data-bind="card.number" data-mock="true">4714 XXXX XXXX 8257</div>
+                            </div>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <p class="text-xs opacity-80">VALID</p>
+                                    <p class="text-xs opacity-80">THRU</p>
+                                    <p class="font-mono text-sm" data-bind="card.expiry" data-mock="true">05/28</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-right" data-bind="card.holder" data-mock="true">DARRY D ENZO</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Italian Tips -->
+                    <div class="bg-white">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Italian Tips</h3>
+                        <div class="space-y-4">
+                            <!-- Auto Save Tip -->
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-piggy-bank text-yellow-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800 mb-1">Auto Save</h4>
+                                    <p class="text-sm text-gray-600">Set a goal, save automatically with Italian National Offshore's Auto Save and track your progress.</p>
+                                </div>
+                            </div>
+
+                            <!-- Budget Tip -->
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-wallet text-green-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800 mb-1">Budget</h4>
+                                    <p class="text-sm text-gray-600">Check in with your budget and stay on top of your spending.</p>
+                                </div>
+                            </div>
+
+                            <!-- Home Option Tip -->
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-home text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800 mb-1">Home Option</h4>
+                                    <p class="text-sm text-gray-600">Your home purchase, refinance and insights right under one roof.</p>
+                                </div>
+                            </div>
+
+                            <!-- Security Tip -->
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-shield-alt text-red-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800 mb-1">Security Tip</h4>
+                                    <p class="text-sm text-gray-600">We will NEVER ask you to provide your security details such as CVV Code or any sensitive details of your account.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: QuickActions -->
+
+    <!-- @COMPONENT: FooterNavigation [navigation items] -->
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-center space-x-12">
+                <button class="flex flex-col items-center space-y-2 text-gray-600 hover:text-primary transition-colors" data-event="click:settings">
+                    <i class="fas fa-cog text-xl"></i>
+                    <span class="text-sm font-medium">Settings</span>
+                </button>
+                
+                <button class="flex flex-col items-center space-y-2 text-gray-600 hover:text-primary transition-colors" data-event="click:notifications">
+                    <i class="fas fa-bell text-xl"></i>
+                    <span class="text-sm font-medium">Notifications</span>
+                </button>
+                
+                <button class="flex flex-col items-center space-y-2 text-primary" data-event="click:home">
+                    <i class="fas fa-home text-xl"></i>
+                    <span class="text-sm font-medium">Home</span>
+                </button>
+                
+                <button class="flex flex-col items-center space-y-2 text-gray-600 hover:text-primary transition-colors" data-event="click:support">
+                    <i class="far fa-life-ring text-xl"></i>
+                    <span class="text-sm font-medium">Support</span>
+                </button>
+                
+                <button class="flex flex-col items-center space-y-2 text-gray-600 hover:text-primary transition-colors" data-event="click:logout">
+                    <i class="fas fa-sign-out-alt text-xl"></i>
+                    <span class="text-sm font-medium">Logout</span>
+                </button>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: FooterNavigation -->
+
+    <!-- @STATE: accounts:array = [] -->
+    <!-- @STATE: beneficiaries:array = [] -->
+    <!-- @STATE: notifications:array = [] -->
+    <!-- @STATE: user:object = {} -->
+
+    <!-- @FUNCTIONALITY: Database Schema Requirements -->
+    <!--
+    ACCOUNTS TABLE:
+    - id (primary key)
+    - user_id (foreign key)
+    - account_type (savings, checking, investment)
+    - balance (decimal)
+    - account_number (string, masked display)
+    - total_credit (decimal)
+    - total_debit (decimal)
+    - created_at, updated_at
+
+    BENEFICIARIES TABLE:
+    - id (primary key)
+    - user_id (foreign key)
+    - name (string)
+    - account_number (string)
+    - bank_name (string)
+    - routing_number (string)
+    - created_at, updated_at
+
+    TRANSACTIONS TABLE:
+    - id (primary key)
+    - account_id (foreign key)
+    - transaction_type (credit/debit)
+    - amount (decimal)
+    - description (string)
+    - transaction_date (timestamp)
+    
+    CARDS TABLE:
+    - id (primary key)
+    - user_id (foreign key)
+    - card_number (encrypted string)
+    - expiry_date (string)
+    - cardholder_name (string)
+    - card_type (debit/credit)
+    -->
+
+    <script>
+        // Initialize Swiper for account carousel
+        (function() {
+            const swiper = new Swiper('.account-swiper', {
+                slidesPerView: 2.2,
+                spaceBetween: 16,
+                freeMode: true,
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                    hide: true,
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2.2,
+                        spaceBetween: 20,
+                    },
+                    768: {
+                        slidesPerView: 2.5,
+                        spaceBetween: 20,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 24,
+                    },
+                }
+            });
+
+            // TODO: Implement account data fetching
+            // TODO: Implement form handlers for all banking operations
+            // TODO: Implement beneficiary management
+            // TODO: Implement transaction history
+            // TODO: Implement card management
+            // TODO: Implement notification system
+            // TODO: Implement user profile management
+            // TODO: Implement security features
+            
+            console.log('Italian National Offshore Banking Dashboard Initialized');
+        })();
+    </script>
+
+</body>
+</html>
