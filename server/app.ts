@@ -1,7 +1,7 @@
 import express, { type Express, type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupSession, registerAuthRoutes } from "./auth";
-import { log } from "./vite";
+import { log } from "./logger";
 import dotenv from "dotenv";
 import type { Server } from "http";
 
@@ -16,8 +16,8 @@ export async function createApp(): Promise<{ app: Express; server: Server }> {
 
   const app = express();
   app.set("trust proxy", 1);
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json({ limit: "10mb" }));
+  app.use(express.urlencoded({ extended: false, limit: "10mb" }));
   setupSession(app);
 
   app.use((req, res, next) => {
@@ -56,7 +56,7 @@ export async function createApp(): Promise<{ app: Express; server: Server }> {
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
+    console.error("Unhandled error:", err);
     res.status(status).json({ message });
   });
 
