@@ -14,6 +14,7 @@ import bcrypt from "bcryptjs";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import os from "os";
 import { requireAdmin, requireAuth } from "./auth";
 import { TransferService } from "./services/transfer-service";
 import { DepositService } from "./services/deposit-service";
@@ -1319,7 +1320,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Open Account Application endpoint
-  const uploadDir = path.resolve(process.cwd(), "server", "uploads");
+  const uploadDir = process.env.VERCEL
+    ? path.join(os.tmpdir(), "uploads")
+    : path.resolve(process.cwd(), "server", "uploads");
   fs.mkdirSync(uploadDir, { recursive: true });
   const storageMulter = multer({ dest: uploadDir });
 
