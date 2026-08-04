@@ -1323,7 +1323,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const uploadDir = process.env.VERCEL
     ? path.join(os.tmpdir(), "uploads")
     : path.resolve(process.cwd(), "server", "uploads");
-  fs.mkdirSync(uploadDir, { recursive: true });
+  try {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  } catch (e) {
+    console.error("Failed to create upload directory:", e);
+  }
   const storageMulter = multer({ dest: uploadDir });
 
   app.post("/api/applications", storageMulter.fields([

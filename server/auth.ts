@@ -1,8 +1,9 @@
 import type { Express, Request, Response } from "express";
 import session from "express-session";
+import MySQLStoreFactory from "express-mysql-session";
 import bcrypt from "bcryptjs";
 import { storage } from "./storage";
-import { db } from "./db";
+import { db, pool } from "./db";
 import { users as usersTable, notifications as notificationsTable } from "../shared/schema";
 import { eq, and, gt } from "drizzle-orm";
 import { EmailService } from "./services/email-service";
@@ -38,11 +39,23 @@ declare module "express-session" {
 
 const isVercel = !!process.env.VERCEL;
 
+const MySQLStore = MySQLStoreFactory(session as any);
+// Serverless functions have no shared memory between invocations, so the
+// default MemoryStore silently drops sessions (login "works" but the very
+// next request looks logged out). Persist sessions in MySQL instead.
+// clearExpired is disabled because a setInterval has no place in a
+// stateless function container; expired rows are simply ignored on read.
+const sessionStore = new MySQLStore(
+    { clearExpired: false, expiration: 1000 * 60 * 60 * 2 } as any,
+    pool as any,
+);
+
 export function setupSession(app: Express) {
     const secret = process.env.SESSION_SECRET || "dev secret offme";
     app.use(
         session({
             secret,
+            store: sessionStore as any,
             resave: false,
             saveUninitialized: false,
             rolling: false,

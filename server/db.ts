@@ -5,14 +5,22 @@ import * as schema from "../shared/schema";
 
 dotenv.config();
 
+// Most shared MySQL hosts (e.g. InterServer/DirectAdmin) do not have SSL
+// configured, so SSL must be opt-in via DB_SSL=true, not opt-out.
+const ssl = process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : undefined;
+
+// Serverless functions run many concurrent instances, each with its own pool.
+// Keep per-instance pool size small so we don't exhaust the DB's max_connections.
+const connectionLimit = process.env.VERCEL ? 3 : 10;
+
 function createPoolConnection() {
   const connectionUri = process.env.DATABASE_URL;
   if (connectionUri) {
     return mysql.createPool({
       uri: connectionUri,
-      ssl: process.env.DB_SSL === "false" ? undefined : { rejectUnauthorized: false },
+      ssl,
       waitForConnections: true,
-      connectionLimit: 10,
+      connectionLimit,
       queueLimit: 0,
     });
   }
@@ -23,9 +31,9 @@ function createPoolConnection() {
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "booking-master",
     port: Number(process.env.DB_PORT) || 3306,
-    ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : undefined,
+    ssl,
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit,
     queueLimit: 0,
   });
 }
