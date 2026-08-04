@@ -12,9 +12,10 @@ import { db } from "./db";
 import { eq, and, sql, desc } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import multer from "multer";
+import { put } from "@vercel/blob";
+import { randomUUID } from "node:crypto";
 import path from "path";
 import fs from "fs";
-import os from "os";
 import { requireAdmin, requireAuth } from "./auth";
 import { TransferService } from "./services/transfer-service";
 import { DepositService } from "./services/deposit-service";
@@ -1320,15 +1321,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Open Account Application endpoint
-  const uploadDir = process.env.VERCEL
-    ? path.join(os.tmpdir(), "uploads")
-    : path.resolve(process.cwd(), "server", "uploads");
-  try {
+  //
+  // Files are stored in Vercel Blob (persistent, works across serverless
+  // instances) whenever a blob store is configured. Local development
+  // without BLOB_READ_WRITE_TOKEN falls back to disk under server/uploads.
+  async function storeApplicationFile(file: Express.Multer.File): Promise<string> {
+    const key = `applications/${randomUUID()}-${file.originalname}`;
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      const blob = await put(key, file.buffer, {
+        access: "public",
+        addRandomSuffix: false,
+      });
+      return blob.url;
+    }
+    const uploadDir = path.resolve(process.cwd(), "server", "uploads");
     fs.mkdirSync(uploadDir, { recursive: true });
-  } catch (e) {
-    console.error("Failed to create upload directory:", e);
+    const filePath = path.join(uploadDir, `${randomUUID()}-${file.originalname}`);
+    fs.writeFileSync(filePath, file.buffer);
+    return path.relative(path.resolve(process.cwd(), "server"), filePath);
   }
-  const storageMulter = multer({ dest: uploadDir });
+
+  const storageMulter = multer({ storage: multer.memoryStorage() });
 
   app.post("/api/applications", storageMulter.fields([
     { name: "passport", maxCount: 1 },
@@ -1341,6 +1354,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const idFile = files?.idDocument?.[0];
       const passwordHash = bcrypt.hashSync(body.password, 12);
       const pinHash = bcrypt.hashSync(body.pin, 12);
+      const [passportPath, idPath] = await Promise.all([
+        passportFile ? storeApplicationFile(passportFile) : Promise.resolve(undefined),
+        idFile ? storeApplicationFile(idFile) : Promise.resolve(undefined),
+      ]);
       const validated = insertApplicationSchema.parse({
         name: body.name,
         email: body.email,
@@ -1359,8 +1376,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         nokRelationship: body.nokRelationship,
         nokAddress: body.nokAddress,
         currency: body.currency,
-        passportPath: passportFile ? path.relative(path.resolve(process.cwd(), "server"), passportFile.path) : undefined,
-        idPath: idFile ? path.relative(path.resolve(process.cwd(), "server"), idFile.path) : undefined,
+        passportPath,
+        idPath,
         passwordHash,
         pinHash,
       });
